@@ -41,8 +41,3 @@ A starter pack for nodejs with bluemix deployment.
 6. (optional) Copy manifest.yml from *DOWNLOAD STARTER CODE* to the application directory
 7. Complete steps 2-7 for deployment
 8. if you copied `manifest.yml` you can just run `cf push` for redeployment
-
-## Testing
-Import `postman/Bluemix starter.postman_collection.json` collection and `postman/bluemix starter.postman_environment.json` environment.  
-
-Live demo http://sky-bluemix-starter.eu-gb.mybluemix.net/api/test  
