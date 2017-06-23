@@ -77,7 +77,7 @@ function generateDummySales(article, weatherInfo) {
     multiplier = -2;
   }
 
-  const weatherEffect = parseFloat(article.goodWeatherEffect)
+  const weatherEffect = parseFloat(article.goodWeatherEffect);
   const newSale = avgSaleRate +
     ((weatherEffect) * (multiplier) * (Math.random() * (avgSaleRate / 2)));
 
