@@ -4,6 +4,7 @@
 import WeatherDataController from './controllers/WeatherDataController';
 import MockSalesController from './controllers/MockDataController';
 import SolrController from './controllers/SolrController';
+import SalesForecastController from './controllers/SalesForecastController';
 
 export default {
   '/weatherForecast/:latitude/:longitude/:timeInterval/:timePeriod': {
@@ -87,6 +88,12 @@ export default {
   '/solr/querySolr/:clusterId': {
     get: {
       method: SolrController.querySolr,
+      public: true,
+    },
+  },
+  '/salesForecast/:locationName/:itemName': {
+    get: {
+      method: SalesForecastController.getSalesForecast,
       public: true,
     },
   },
