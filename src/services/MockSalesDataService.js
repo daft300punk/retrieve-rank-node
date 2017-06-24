@@ -39,13 +39,13 @@ function getRequestPromiseArray() {
  * @returns {Array} array of dates in range
  */
 function getAllDatesInRange() {
-  const start = moment(locations.timespan.startDate, 'MM-DD-YYYY');
-  const end = moment(locations.timespan.endDate, 'MM-DD-YYYY');
+  const start = moment(locations.timespan.startDate, 'YYYY-MM-DD');
+  const end = moment(locations.timespan.endDate, 'YYYY-MM-DD');
 
   const dates = [];
 
   for (let m = moment(start); m.diff(end, 'days') <= 0; m.add(1, 'days')) {
-    dates.push(m.format('MM-DD-YYYY'));
+    dates.push(m.format('YYYY-MM-DD'));
   }
 
   return dates;
@@ -81,7 +81,7 @@ function generateDummySales(article, weatherInfo) {
   const newSale = avgSaleRate +
     ((weatherEffect) * (multiplier) * (Math.random() * (avgSaleRate / 2)));
 
-  return newSale;
+  return parseInt(newSale, 10);
 }
 
 /**
@@ -91,7 +91,7 @@ function generateDummySales(article, weatherInfo) {
  * @returns {Object} the object containing weather data.
  */
 function generateWeatherInfo(location, date) {
-  const dayNumber = moment(date, 'MM-DD-YYYY').dayOfYear();
+  const dayNumber = moment(date, 'YYYY-MM-DD').dayOfYear();
   const weatherInfo = weatherInfoForAllLocation[location.name].almanac_summaries[dayNumber - 1];
   const hi = weatherInfo.record_hi;
   const mean = weatherInfo.mean_temp;
@@ -105,7 +105,7 @@ function generateWeatherInfo(location, date) {
     avg_lo: parseInt(randLow, 10),
     avg_hi: parseInt(randHigh, 10),
     avg_mean: parseInt(randMean, 10),
-    severity: Math.abs(severity),
+    severity: Math.abs(severity.toFixed(4)),
   };
 }
 
@@ -114,6 +114,7 @@ function generateWeatherInfo(location, date) {
  * sales data for each day, location, and article configured in /config/dummyDataConfig
  *
  * @returns {Promise} that resolves with generated dummy sales data.
+ * // TODO: Refactor this
  */
 async function generateSalesData() {
   const promiseArray = getRequestPromiseArray();
@@ -129,17 +130,24 @@ async function generateSalesData() {
       const generatedData = [];
       const dates = getAllDatesInRange();
 
+      let index = 0;
       _.forEach(saleArticles, (article) => {
         _.forEach(locations.dummyLocations, (location) => {
           _.forEach(dates, (date) => {
+            index += 1;
             const weatherInfo = generateWeatherInfo(location, date);
             const data = {
-              date,
+              id: `${index}`,
+              date: `${date}T00:00:00Z`,
               articleName: article.name,
-              sales: generateDummySales(article, weatherInfo),
-              location,
-              weatherInfo,
+              location_coord: `${location.geocode.latitude}, ${location.geocode.longitude}`,
+              location_name: location.name,
+              avg_tmp_lo: weatherInfo.avg_lo,
+              avg_tmp_hi: weatherInfo.avg_hi,
+              avg_tmp_mean: weatherInfo.avg_mean,
+              weather_severity: weatherInfo.severity,
               avgSalesRate: article.averageSaleRate,
+              salesToday: generateDummySales(article, weatherInfo),
             };
             generatedData.push(data);
           });
