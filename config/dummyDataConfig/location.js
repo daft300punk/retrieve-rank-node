@@ -22,7 +22,7 @@ module.exports = {
   ],
   // mm-dd-yyyy Both dates are inclusive.
   timespan: {
-    startDate: '01-01-2017',
-    endDate: '02-01-2017',
+    startDate: '2017-01-01',
+    endDate: '2017-02-01',
   },
 };
