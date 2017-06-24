@@ -21,6 +21,18 @@ function listAvailableClusters() {
   });
 }
 
+function createCluster(size, name) {
+  return new Promise((resolve, reject) => {
+    retrieveAndRank.createCluster({
+      cluster_size: size,
+      cluster_name: name,
+    }, (err, response) => {
+      if (err) { reject(err); }
+      resolve(response);
+    });
+  });
+}
+
 function deleteCluster(id) {
   return new Promise((resolve, reject) => {
     retrieveAndRank.deleteCluster({
@@ -136,6 +148,17 @@ function searchCollection(id, queryObject) {
 listAvailableClusters.params = [];
 listAvailableClusters.schema = {};
 
+createCluster.params = ['size', 'name'];
+createCluster.schema = {
+  size: Joi.string().allow(''),
+  name: Joi.string(),
+};
+
+deleteCluster.params = ['id'];
+deleteCluster.schema = {
+  id: Joi.string(),
+};
+
 createSolrCollection.params = ['id'];
 createSolrCollection.schema = {
   id: Joi.string(),
@@ -169,6 +192,8 @@ searchCollection.schema = {
 
 const SolrServices = {
   listAvailableClusters,
+  deleteCluster,
+  createCluster,
   createSolrCollection,
   deleteSolrCollection,
   uploadSolrConfig,

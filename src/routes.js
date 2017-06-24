@@ -42,9 +42,15 @@ export default {
       public: true,
     },
   },
-  '/solr/uploadData': {
+  '/solr/createCluster': {
     get: {
-      method: SolrController.uploadData,
+      method: SolrController.createCluster,
+      public: true,
+    },
+  },
+  '/solr/deleteCluster': {
+    get: {
+      method: SolrController.deleteCluster,
       public: true,
     },
   },

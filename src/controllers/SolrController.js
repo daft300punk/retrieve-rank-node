@@ -9,12 +9,25 @@ async function getAvailableClusters(req, res) {
   }
 }
 
-async function uploadData(req, res) {
+async function createCluster(req, res) {
   try {
-    const message = await SolrServices.uploadData();
+    const clusterName = req.query.name;
+    const clusterSize = req.query.size || '';
+
+    const message = await SolrServices.createCluster(clusterSize, clusterName);
     res.json(message);
   } catch (e) {
-    res.status(520).send('Error uploading data');
+    res.status(520).send(`Error uploading config: ${e}`);
+  }
+}
+
+async function deleteCluster(req, res) {
+  try {
+    const clusterId = req.query.cluster_id;
+    const message = await SolrServices.deleteCluster(clusterId);
+    res.json(message);
+  } catch (e) {
+    res.status(520).send(`Error uploading config: ${e}`);
   }
 }
 
@@ -74,7 +87,8 @@ async function querySolr(req, res) {
 
 export default {
   getAvailableClusters,
-  uploadData,
+  createCluster,
+  deleteCluster,
   uploadSolrConfig,
   deleteSolrConfig,
   createSolrCollection,
