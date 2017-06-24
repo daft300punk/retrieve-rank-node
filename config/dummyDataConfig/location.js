@@ -2,7 +2,7 @@
 * 1. Each item in locations array should contain latitude and longitude
 * 2. timespan should contain starting and end date in shown format
 */
-
+// TODO: Better replace name with placeId
 module.exports = {
   dummyLocations: [
     {

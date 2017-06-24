@@ -1,6 +1,7 @@
 import decorate from 'decorate-it';
 import Joi from 'joi';
 import path from 'path';
+import _ from 'lodash';
 import MockSalesDataService from './MockSalesDataService';
 
 const watson = require('watson-developer-cloud');
@@ -126,7 +127,7 @@ async function uploadSalesData(id) {
   });
 }
 
-function searchCollection(id, queryObject) {
+function searchCollection(id, queryObject, sortObject, rows = 10) {
   return new Promise((resolve, reject) => {
     const params = {
       cluster_id: id,
@@ -137,6 +138,8 @@ function searchCollection(id, queryObject) {
     const solrClient = retrieveAndRank.createSolrClient(params);
     const query = solrClient.createQuery();
     query.q(queryObject);
+    if (!_.isEmpty(sortObject)) { query.sort(sortObject); }
+    query.rows(rows);
 
     solrClient.search(query, (err, searchResponse) => {
       if (err) { reject(err); }
@@ -184,10 +187,12 @@ uploadSalesData.schema = {
   id: Joi.string(),
 };
 
-searchCollection.params = ['id', 'queryObject'];
+searchCollection.params = ['id', 'queryObject', 'sortObject', 'rows'];
 searchCollection.schema = {
   id: Joi.string(),
   queryObject: Joi.object(),
+  sortObject: Joi.object(),
+  rows: Joi.number(),
 };
 
 const SolrServices = {

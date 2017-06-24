@@ -114,50 +114,48 @@ function generateWeatherInfo(location, date) {
  * sales data for each day, location, and article configured in /config/dummyDataConfig
  *
  * @returns {Promise} that resolves with generated dummy sales data.
- * // TODO: Refactor this
  */
 async function generateSalesData() {
-  const promiseArray = getRequestPromiseArray();
-  const result = await Promise.all(promiseArray);
+  try {
+    const promiseArray = getRequestPromiseArray();
+    const result = await Promise.all(promiseArray);
 
-  return new Promise((resolve, reject) => {
-    try {
-      _.forEach(locations.dummyLocations, (location, index) => {
-        weatherInfoForAllLocation[location.name] = result[index];
-      });
+    _.forEach(locations.dummyLocations, (location, index) => {
+      weatherInfoForAllLocation[location.name] = result[index];
+    });
 
 
-      const generatedData = [];
-      const dates = getAllDatesInRange();
+    const generatedData = [];
+    const dates = getAllDatesInRange();
 
-      let index = 0;
-      _.forEach(saleArticles, (article) => {
-        _.forEach(locations.dummyLocations, (location) => {
-          _.forEach(dates, (date) => {
-            index += 1;
-            const weatherInfo = generateWeatherInfo(location, date);
-            const data = {
-              id: `${index}`,
-              date: `${date}T00:00:00Z`,
-              articleName: article.name,
-              location_coord: `${location.geocode.latitude}, ${location.geocode.longitude}`,
-              location_name: location.name,
-              avg_tmp_lo: weatherInfo.avg_lo,
-              avg_tmp_hi: weatherInfo.avg_hi,
-              avg_tmp_mean: weatherInfo.avg_mean,
-              weather_severity: weatherInfo.severity,
-              avgSalesRate: article.averageSaleRate,
-              salesToday: generateDummySales(article, weatherInfo),
-            };
-            generatedData.push(data);
-          });
+    let index = 0;
+    _.forEach(saleArticles, (article) => {
+      _.forEach(locations.dummyLocations, (location) => {
+        _.forEach(dates, (date) => {
+          index += 1;
+          const weatherInfo = generateWeatherInfo(location, date);
+          const data = {
+            id: `${index}`,
+            date: `${date}T00:00:00Z`,
+            articleName: article.name,
+            location_coord: `${location.geocode.latitude}, ${location.geocode.longitude}`,
+            location_name: location.name,
+            avg_tmp_lo: weatherInfo.avg_lo,
+            avg_tmp_hi: weatherInfo.avg_hi,
+            avg_tmp_mean: weatherInfo.avg_mean,
+            weather_severity: weatherInfo.severity,
+            avgSalesRate: article.averageSaleRate,
+            salesToday: generateDummySales(article, weatherInfo),
+          };
+          generatedData.push(data);
         });
-        resolve(generatedData);
       });
-    } catch (e) {
-      reject(e);
-    }
-  });
+    });
+
+    return generatedData;
+  } catch (e) {
+    throw e;
+  }
 }
 
 generateSalesData.params = [];
