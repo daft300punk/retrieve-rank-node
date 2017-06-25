@@ -1,8 +1,8 @@
 applications:
 - path: .
-  memory: 512M
+  memory: 1024MB
   instances: 1
   domain: eu-gb.mybluemix.net
-  name: tc-daft300punk-retrieve-rank
-  host: tc-daft300punk-retrieve-rank
+  name: retrieve-and-rank-daft300punk
+  host: retrieve-and-rank-daft300punk
   disk_quota: 2048M

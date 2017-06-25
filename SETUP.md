@@ -45,7 +45,7 @@ Take a look at the .env file. The content of my .env files are
 - UNAME="600ecc2e-c83d-4b43-bc32-1e2c40d4522a"
 - PASSWORD="apNyvc3ONV"
 - HOST="twcservice.eu-gb.mybluemix.net"
-- PORT=443
+- PORT_WS=443
 - URL="https://600ecc2e-c83d-4b43-bc32-1e2c40d4522a:apNyvc3ONV@twcservice.eu-gb.mybluemix.net"
 - RR_UNAME="82d2aeda-cf69-4d3a-b200-7d77b0ad9ca7"
 - RR_PASSWORD="LTRmtRmtAZCB"

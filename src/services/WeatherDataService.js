@@ -2,7 +2,7 @@ import decorate from 'decorate-it';
 import Joi from 'joi';
 import fetch from 'isomorphic-fetch';
 
-const hostname = `https://${process.env.UNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/api/weather`;
+const hostname = `https://${process.env.UNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT_WS}/api/weather`;
 
 /**
  * Utility function to build geocde part of url.
