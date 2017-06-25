@@ -5,6 +5,16 @@ const getGeocodeFromReq = req => ({
   longitude: req.params.longitude,
 });
 
+/**
+ * Path - /weatherForecast/:latitude/:longitude/:timeInterval/:timePeriod
+ *
+ * Provide latitude and longitude without south, north etc. Should be numbers
+ * with sign.
+ *
+ * Get weather forecast.
+ * TimeInterval can be hourly, daily etc. See docs.
+ * TimePeriod can be 1day 3day etc. See docs.
+ */
 async function weatherForecast(req, res) {
   const geocode = getGeocodeFromReq(req);
   const timeInterval = req.params.timeInterval;
@@ -20,6 +30,13 @@ async function weatherForecast(req, res) {
   }
 }
 
+/**
+ * Path - /weatherAlerts/:latitude/:longitude
+ *
+ * Get weather alerts.
+ * Most of the time this should not return much info. Since, not all
+ * place will have weather conditions bad enough to have alerts.
+ */
 async function alerts(req, res) {
   const geocode = getGeocodeFromReq(req);
   try {
@@ -32,6 +49,15 @@ async function alerts(req, res) {
   }
 }
 
+/**
+ * Path - /weatherHistory/:latitude/:longitude/:startDate/:endDate
+ *
+ * startDate - MMDD
+ * endDate - MMDD
+ *
+ * Get past almanac info for a location. It is nothing but average
+ * weather parameters measured over long duration (30 years mostly).
+ */
 async function weatherHistory(req, res) {
   const geocode = getGeocodeFromReq(req);
   const timePeriod = {
@@ -48,6 +74,12 @@ async function weatherHistory(req, res) {
   }
 }
 
+/**
+ * Path - /location/:latitude/:longitude
+ *
+ * Might be useful if you want to know more about the providing
+ * latitude and longitude values.
+ */
 async function getLocation(req, res) {
   const geocode = getGeocodeFromReq(req);
   try {

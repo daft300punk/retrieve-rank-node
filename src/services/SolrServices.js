@@ -6,13 +6,20 @@ import MockSalesDataService from './MockSalesDataService';
 
 const watson = require('watson-developer-cloud');
 
-
+// Set theses environment variables. You get theses config info from
+// bluemix console, after you create these services.
 const retrieveAndRank = watson.retrieve_and_rank({
   username: process.env.RR_UNAME,
   password: process.env.RR_PASSWORD,
   version: 'v1',
 });
 
+/**
+ * List available clusters. Useful for knowing the status of cluster, or
+ * finding cluster id.
+ *
+ * @returns {Promise} that resolves with available cluster info.
+ */
 function listAvailableClusters() {
   return new Promise((resolve, reject) => {
     retrieveAndRank.listClusters({}, (err, res) => {
@@ -22,6 +29,15 @@ function listAvailableClusters() {
   });
 }
 
+/**
+ * Create a cluster with provided name and size. For free accounts you can only
+ * create 1 cluster, without any size, i.e dont provide size value(empty string).
+ * See docs for more on sizing clusters.
+ *
+ * @param {String}
+ * @param {String}
+ * @returns {Promise}
+ */
 function createCluster(size, name) {
   return new Promise((resolve, reject) => {
     retrieveAndRank.createCluster({
@@ -34,6 +50,13 @@ function createCluster(size, name) {
   });
 }
 
+/**
+ * Delete a cluster. Is useful in development, when data/schema is changing
+ * constantly.
+ *
+ * @param {String} id cluster_id
+ * @returns {Promise}
+ */
 function deleteCluster(id) {
   return new Promise((resolve, reject) => {
     retrieveAndRank.deleteCluster({
@@ -45,6 +68,15 @@ function deleteCluster(id) {
   });
 }
 
+/**
+ * Upload solr config zip file. Note the directory in which zip file is stored.
+ * The zip file contains a schema and some other files. You might only need to
+ * change schema file. Update schema when you update the shape of sales data
+ * you upload on R&R service.
+ *
+ * @param {String} id cluster id.
+ * @returns {Promise}
+ */
 function uploadSolrConfig(id) {
   return new Promise((resolve, reject) => {
     const params = {
@@ -60,6 +92,12 @@ function uploadSolrConfig(id) {
   });
 }
 
+/**
+ * Delete solr config. Useful in development, when data/schema is changing.
+ *
+ * @param {String} id cluster id
+ * @returns {Promise}
+ */
 function deleteSolrConfig(id) {
   return new Promise((resolve, reject) => {
     const params = {
@@ -74,6 +112,16 @@ function deleteSolrConfig(id) {
   });
 }
 
+/**
+ * Create a solr collection in a cluster identified by the id provided. Before
+ * you start indexing the your sales data, you need a collection. Note, you
+ * can also dynamically provide collection_name. Since free accounts only allow
+ * for 1 collection/cluster, I hard code collection name. Make necessary small
+ * changes in routes to receive variable collection_name.
+ *
+ * @param {String} id cluster id
+ * @returns {Promise}
+ */
 function createSolrCollection(id) {
   return new Promise((resolve, reject) => {
     const params = {
@@ -89,6 +137,13 @@ function createSolrCollection(id) {
   });
 }
 
+/**
+ * Delete a solr collection in a cluster identified by provided id.
+ * Again you can dynamically provide collection name, like just above.
+ *
+ * @param {String} id cluster id.
+ * @returns {Promise}
+ */
 function deleteSolrCollection(id) {
   return new Promise((resolve, reject) => {
     const params = {
@@ -103,6 +158,18 @@ function deleteSolrCollection(id) {
   });
 }
 
+/**
+ * Upload the sales data for indexing. Again, like above you can provide dynamic
+ * collection_name.
+ * This first waits for generation of mock sales data using MockSalesDataService.
+ * Then it sends the received json for indexing.
+ *
+ * If you want to dynamically upload sales data, this is the place to make relevant
+ * changes.
+ *
+ * @param {String} id cluster id
+ * @returns {Promise}
+ */
 async function uploadSalesData(id) {
   let data;
   try {
@@ -127,6 +194,26 @@ async function uploadSalesData(id) {
   });
 }
 
+/**
+ * Call this service to query our solr collection. id is the cluster id of
+ * specific solr cluster.
+ *
+ * queryObject should contain necessary fields for querying. See how querying
+ * works in solr using json. In short, an object { id: '1' } will search in
+ * id field for a value 1.
+ *
+ * sortObject should contain sorting parameters. Provide an empty object if you
+ * dont want sorting of returned query result. Ex. if you want to sort the query
+ * result in ascending order of field weather_severity, provide an object of the
+ * form { weather_severity: 'asc' }. See how sorting works in solr using json
+ * queries.
+ *
+ * @param {String} id
+ * @param {Object} queryObject
+ * @param {Object} sortObject
+ * @param {number} [rows=10]
+ * @returns {Promise}
+ */
 function searchCollection(id, queryObject, sortObject, rows = 10) {
   return new Promise((resolve, reject) => {
     const params = {
