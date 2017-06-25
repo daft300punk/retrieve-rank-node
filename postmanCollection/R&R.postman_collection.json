@@ -1,0 +1,229 @@
+{
+	"variables": [],
+	"info": {
+		"name": "R&R",
+		"_postman_id": "e0c0b9e6-1513-ddae-08d9-dde65e1e4349",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:443/api/weatherForecast/45.42/75.69/hourly/48hour",
+			"request": {
+				"url": "http://localhost:443/api/weatherForecast/45.42/75.69/hourly/48hour",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_term",
+							"value": "computer",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/weatherAlerts/45.42/75.69",
+			"request": {
+				"url": "http://localhost:443/api/weatherAlerts/45.42/75.69",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_term",
+							"value": "computer",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/weatherHistory/33.40/-83.42/101/1231",
+			"request": {
+				"url": "http://localhost:443/api/weatherHistory/33.40/-83.42/101/1231",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_term",
+							"value": "computer",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/location/33.40/-83.42/",
+			"request": {
+				"url": "http://localhost:443/api/location/33.40/-83.42/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_term",
+							"value": "computer",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/mockData",
+			"request": {
+				"url": "http://localhost:443/api/mockData",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_term",
+							"value": "computer",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/solr/availableClusters",
+			"request": {
+				"url": "http://localhost:443/api/solr/availableClusters",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/solr/querySolr/sc9094fd8d_d877_4017_81f5_0b212af2d3ff?*=*",
+			"request": {
+				"url": {
+					"raw": "http://localhost:443/api/solr/querySolr/sc9094fd8d_d877_4017_81f5_0b212af2d3ff?*=*",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"api",
+						"solr",
+						"querySolr",
+						"sc9094fd8d_d877_4017_81f5_0b212af2d3ff"
+					],
+					"query": [
+						{
+							"key": "*",
+							"value": "*",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/solr/querySolr/sc9094fd8d_d877_4017_81f5_0b212af2d3ff?weather_severity=%5B0.2%20TO%201%5D",
+			"request": {
+				"url": {
+					"raw": "http://localhost:443/api/solr/querySolr/sc9094fd8d_d877_4017_81f5_0b212af2d3ff?weather_severity=%5B0.2%20TO%201%5D",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"api",
+						"solr",
+						"querySolr",
+						"sc9094fd8d_d877_4017_81f5_0b212af2d3ff"
+					],
+					"query": [
+						{
+							"key": "weather_severity",
+							"value": "%5B0.2%20TO%201%5D",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:443/api/salesForecast/NewYork/Icecream",
+			"request": {
+				"url": "http://localhost:443/api/salesForecast/NewYork/Icecream",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

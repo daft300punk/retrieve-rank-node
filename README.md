@@ -3,8 +3,11 @@ Based on bluemix starter nodejs kit here - <a href="https://github.com/topcoderi
 Read more about setup and configuration in SETUP.md. Take careful note of environment variables needed, especially the SOLR_CLUSTER_ID, which you get only after you create a solr cluster.
 
 ## Video
+<a href="https://www.youtube.com/watch?v=F-pLlijjkOc">https://www.youtube.com/watch?v=F-pLlijjkOc</a>
 
 ## Live Bluemix deploy
+<a href="https://retrieve-and-rank-daft300punk.eu-gb.mybluemix.net/">https://retrieve-and-rank-daft300punk.eu-gb.mybluemix.net/</a><br>
+Note: home route shows nothing. visit one of the routes below to see output.
 
 ## Endpoints
 Note: All end points are mounted on ```'/api'```.
